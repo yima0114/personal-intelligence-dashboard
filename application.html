@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Application directory for current opportunities and completed records." />
+  <title>Application — Personal Intelligence Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="dashboard-shell application-page">
+    <header class="global-header">
+      <a class="brand brand-link" href="index.html"><span class="brand-mark">Y</span><h1>Personal Intelligence Dashboard</h1></a>
+      <nav><a class="nav-button back-home" href="index.html">← Global Homepage</a><button class="nav-button" id="directory-search-open" type="button"><span aria-hidden="true">⌕</span> Search Applications</button></nav>
+    </header>
+
+    <section class="directory-intro">
+      <div><p class="eyebrow">Application directory</p><h2>Current work and records.</h2></div>
+      <p>Only active decisions stay in the current pipeline. Completed outcomes move into records. V1 uses example content.</p>
+    </section>
+
+    <div class="application-directory-grid">
+      <section class="module directory-module current-module">
+        <div class="directory-module-header">
+          <div><p class="eyebrow">01 · Current</p><h3>Application Pipeline</h3></div>
+          <span class="directory-count" id="active-count">5 active</span>
+        </div>
+        <div class="directory-tabs" role="tablist" aria-label="Current application stages">
+          <button class="directory-tab active" type="button" role="tab" aria-selected="true" data-stage="new">New <span>2</span></button>
+          <button class="directory-tab" type="button" role="tab" aria-selected="false" data-stage="preparing">Preparing <span>2</span></button>
+          <button class="directory-tab" type="button" role="tab" aria-selected="false" data-stage="monitoring">Monitoring <span>1</span></button>
+        </div>
+        <div class="application-list" id="current-list"></div>
+      </section>
+
+      <section class="module directory-module records-module">
+        <div class="directory-module-header">
+          <div><p class="eyebrow">02 · Records</p><h3>Submission History</h3></div>
+          <span class="directory-count">Traceable</span>
+        </div>
+        <div class="directory-tabs record-tabs" role="tablist" aria-label="Application records">
+          <button class="directory-tab active" type="button" role="tab" aria-selected="true" data-record="submitted">Submitted <span>2</span></button>
+          <button class="directory-tab" type="button" role="tab" aria-selected="false" data-record="archive">Archive <span>2</span></button>
+        </div>
+        <div class="application-list record-list" id="record-list"></div>
+      </section>
+    </div>
+
+    <footer class="directory-footer"><p>Application System · V1 directory</p><a href="index.html">Back to Global Homepage ↑</a></footer>
+  </main>
+
+  <div class="overlay-backdrop" id="directory-search" hidden>
+    <section class="search-panel" role="dialog" aria-modal="true" aria-label="Search applications">
+      <div class="search-input-wrap"><span>⌕</span><input id="directory-search-input" type="search" placeholder="Search institution, country, or status…" /><button id="directory-search-close" type="button" aria-label="Close">×</button></div>
+      <div class="search-results" id="directory-search-results"><p>Search the current directory and records.</p></div>
+      <div class="search-footer"><span>Application only</span><p>Keyword retrieval</p></div>
+    </section>
+  </div>
+
+  <div class="overlay-backdrop detail-backdrop" id="application-detail" hidden>
+    <section class="application-detail-panel" role="dialog" aria-modal="true" aria-labelledby="application-detail-title">
+      <div class="application-detail-topline">
+        <p class="eyebrow" id="application-detail-stage">Application</p>
+        <button id="application-detail-close" type="button" aria-label="Close application details">×</button>
+      </div>
+      <p class="application-detail-institution" id="application-detail-institution"></p>
+      <h3 id="application-detail-title"></h3>
+      <div class="application-detail-meta">
+        <div><span>Location</span><strong id="application-detail-place"></strong></div>
+        <div><span>Date</span><strong id="application-detail-date"></strong></div>
+      </div>
+      <div class="application-detail-section">
+        <span>Status note</span>
+        <p id="application-detail-note"></p>
+      </div>
+      <div class="application-detail-section">
+        <span>Next step</span>
+        <p id="application-detail-next"></p>
+      </div>
+      <p class="application-detail-example">Example content · Personal records will remain local in the formal version.</p>
+    </section>
+  </div>
+  <script src="application.js"></script>
+</body>
+</html>
