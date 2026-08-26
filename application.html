@@ -89,6 +89,15 @@
         <span>Official link</span>
         <a id="application-detail-link" href="#" target="_blank" rel="noreferrer">Open opportunity ↗</a>
       </div>
+      <div class="submitted-documents" id="submitted-documents" hidden>
+        <div class="submitted-documents-header">
+          <div><span>Application materials</span><p>PDF, Word, images, and supporting files</p></div>
+          <label class="document-upload-button" for="document-upload">＋ Upload materials</label>
+          <input id="document-upload" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png" multiple hidden />
+        </div>
+        <div class="submitted-document-list" id="submitted-document-list"></div>
+        <p class="document-local-note">Prototype · files stay in this browser session and are not uploaded to GitHub.</p>
+      </div>
       <div class="application-detail-section">
         <span>Why it fits</span>
         <ul id="application-detail-fit-notes"></ul>

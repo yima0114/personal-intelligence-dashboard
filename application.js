@@ -87,6 +87,7 @@ const viewCopy = {
 let selectedView = 'all';
 let openItemId = null;
 let manualId = 0;
+const submittedFiles = new Map();
 
 const folderGrid = document.querySelector('#folder-grid');
 const folderEmpty = document.querySelector('#folder-empty');
@@ -94,6 +95,9 @@ const detailOverlay = document.querySelector('#application-detail');
 const detailActions = document.querySelector('#application-detail-actions');
 const addOverlay = document.querySelector('#manual-add');
 const addForm = document.querySelector('#manual-add-form');
+const submittedDocuments = document.querySelector('#submitted-documents');
+const documentUpload = document.querySelector('#document-upload');
+const submittedDocumentList = document.querySelector('#submitted-document-list');
 
 function allItems() {
   return viewOrder.flatMap(stage => collections[stage]);
@@ -193,9 +197,33 @@ function openDetail(id) {
   link.classList.toggle('is-disabled', !item.link);
   document.querySelector('#application-detail-fit-notes').innerHTML = item.fitNotes.map(note => `<li>${note}</li>`).join('');
   document.querySelector('#application-detail-note').textContent = item.note || 'No notes yet.';
+  submittedDocuments.hidden = item.stage !== 'submitted';
+  if (item.stage === 'submitted') renderSubmittedFiles(item.id);
   renderDetailActions(item);
   detailOverlay.hidden = false;
   setTimeout(() => document.querySelector('#application-detail-close').focus(), 0);
+}
+
+function fileTypeLabel(file) {
+  const extension = file.name.includes('.') ? file.name.split('.').pop().toUpperCase() : 'FILE';
+  return extension.slice(0, 5);
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+}
+
+function fileSizeLabel(bytes) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`;
+  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+}
+
+function renderSubmittedFiles(itemId) {
+  const files = submittedFiles.get(itemId) || [];
+  submittedDocumentList.innerHTML = files.length
+    ? files.map(file => `<a class="submitted-document" href="${file.url}" target="_blank" rel="noreferrer"><span class="document-type">${escapeHTML(fileTypeLabel(file))}</span><span><strong>${escapeHTML(file.name)}</strong><small>${fileSizeLabel(file.size)} · Click to open</small></span><b>↗</b></a>`).join('')
+    : '<p class="document-empty">No materials added in this session.</p>';
 }
 
 function renderDetailActions(item) {
@@ -317,6 +345,21 @@ document.querySelector('#directory-search-close').addEventListener('click', clos
 document.querySelector('#application-detail-close').addEventListener('click', closeDetail);
 document.querySelector('#manual-add-open').addEventListener('click', openManualAdd);
 document.querySelector('#manual-add-close').addEventListener('click', closeManualAdd);
+
+documentUpload.addEventListener('change', () => {
+  const item = findItem(openItemId);
+  if (!item || item.stage !== 'submitted') return;
+  const existing = submittedFiles.get(item.id) || [];
+  const added = Array.from(documentUpload.files).map(file => ({
+    name: file.name,
+    size: file.size,
+    type: file.type,
+    url: URL.createObjectURL(file)
+  }));
+  submittedFiles.set(item.id, [...existing, ...added]);
+  documentUpload.value = '';
+  renderSubmittedFiles(item.id);
+});
 
 searchOverlay.addEventListener('click', event => { if (event.target === searchOverlay) closeSearch(); });
 detailOverlay.addEventListener('click', event => { if (event.target === detailOverlay) closeDetail(); });
