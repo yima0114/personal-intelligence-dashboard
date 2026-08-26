@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A calm personal workspace for applications, reading, time, and daily focus." />
+  <title>Personal Intelligence Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="dashboard-shell">
+    <header class="global-header">
+      <div class="brand"><span class="brand-mark">Y</span><h1>Personal Intelligence Dashboard</h1></div>
+      <nav>
+        <button class="nav-button" id="search-open" type="button"><span aria-hidden="true">⌕</span> Global Search <kbd>⌘K</kbd></button>
+        <button class="nav-button knowledge-button" type="button"><span aria-hidden="true">▤</span> Knowledge</button>
+        <button class="mobile-menu" type="button" aria-label="Open menu">☰</button>
+      </nav>
+    </header>
+
+    <div class="dashboard-grid">
+      <aside class="left-column" aria-label="Time and control">
+        <section class="module time-wrap">
+          <button class="time-module" id="time-open" type="button" aria-expanded="false">
+            <span><span class="eyebrow">Singapore</span><time class="digital-time" id="local-time">--:--</time></span>
+            <span class="line-icon" aria-hidden="true">◎</span>
+          </button>
+          <div class="world-popover" id="world-popover" hidden>
+            <div class="popover-title"><div><p class="eyebrow">World time</p><h3>Your places</h3></div><button type="button" aria-label="Add time zone">＋</button></div>
+            <div class="zone-list" id="zone-list"></div>
+            <p class="popover-note">Select the places you want to keep here.</p>
+          </div>
+        </section>
+
+        <section class="module calendar-module" aria-label="Calendar">
+          <div class="calendar-header">
+            <div><p class="eyebrow">Calendar</p><h2 id="calendar-title">Month <span>Year</span></h2></div>
+            <div class="icon-pair"><button type="button" aria-label="Previous month">‹</button><button type="button" aria-label="Next month">›</button></div>
+          </div>
+          <div class="weekdays" aria-hidden="true"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+          <div class="calendar-grid" id="calendar-grid"></div>
+          <div class="calendar-legend"><span></span><p>Cycle Plan · Research stabilization</p></div>
+        </section>
+
+        <section class="module tasks-module">
+          <div class="section-heading"><div><p class="eyebrow">Today</p><h2>Tasks</h2></div><span class="count-label" id="remaining-count">4 remaining</span></div>
+          <div class="task-scroll" id="task-list"></div>
+          <button class="quiet-action" type="button">＋ Add task</button>
+        </section>
+      </aside>
+
+      <div class="center-column">
+        <section class="module main-module application-module">
+          <div class="module-title-row"><div><p class="eyebrow">01 · Active system</p><h2>Application</h2></div><button class="open-link" type="button">Open <span>→</span></button></div>
+          <div class="summary-list">
+            <button class="summary-item" type="button" data-search="new opportunities fellowship application"><span class="summary-icon"><i class="status-dot status-blue"></i></span><span class="summary-copy"><span>New Opportunities</span><strong>2 strong matches</strong><small>Last scan · today</small></span><b>→</b></button>
+            <button class="summary-item" type="button" data-search="monitoring HDK Valand decision"><span class="summary-icon"><i class="status-dot status-amber"></i></span><span class="summary-copy"><span>Monitoring</span><strong>HDK-Valand — decision period</strong><small>Next update expected in October</small></span><b>→</b></button>
+            <button class="summary-item" type="button" data-search="preparing KHiO applications"><span class="summary-icon"><i class="status-dot"></i></span><span class="summary-copy"><span>Preparing</span><strong>KHiO · 2 applications</strong><small>Deadline · 01 Sep 2026</small></span><b>→</b></button>
+          </div>
+        </section>
+
+        <section class="module main-module reading-module">
+          <div class="module-title-row"><div><p class="eyebrow">02 · Research rhythm</p><h2>Reading</h2></div><button class="open-link" type="button">Open <span>→</span></button></div>
+          <div class="reading-grid">
+            <button class="summary-item" type="button" data-search="research recommendations artistic methods documentation"><span class="summary-icon">◫</span><span class="summary-copy"><span>New Research Recommendations</span><strong>4 sources ready to review</strong><small>Artistic methods · documentation</small></span><b>→</b></button>
+            <button class="summary-item" type="button" data-search="today reading plan documentation traceability"><span class="summary-icon">□</span><span class="summary-copy"><span>Today’s Plan</span><strong>Documentation &amp; traceability</strong><small>1 focused reading · 25 min</small></span><b>→</b></button>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right-column" aria-label="Capture">
+        <section class="capture-module"><div class="capture-heading"><span>□</span><p>Capture</p></div><p class="capture-copy">A quiet place for what should not be lost.</p><button id="capture-open" type="button">＋ Quick note</button></section>
+        <p class="right-note">V1 · Global overview</p>
+      </aside>
+    </div>
+  </main>
+
+  <div class="overlay-backdrop" id="search-overlay" hidden>
+    <section class="search-panel" role="dialog" aria-modal="true" aria-label="Global search">
+      <div class="search-input-wrap"><span>⌕</span><input id="search-input" type="search" placeholder="Search applications, readings, tasks…" /><button id="search-close" type="button" aria-label="Close search">×</button></div>
+      <div class="search-results" id="search-results"><p>Type a keyword to search across your dashboard.</p></div>
+      <div class="search-footer"><span>⌘ K</span><p>Keyword retrieval only</p></div>
+    </section>
+  </div>
+
+  <section class="capture-popover" id="capture-popover" role="dialog" aria-label="Quick capture" hidden>
+    <div><p class="eyebrow">Quick capture</p><button id="capture-close" type="button" aria-label="Close">×</button></div>
+    <textarea placeholder="Write a note…"></textarea>
+    <button class="save-note" id="capture-save" type="button">✓ Save note</button>
+  </section>
+  <script src="script.js"></script>
+</body>
+</html>
