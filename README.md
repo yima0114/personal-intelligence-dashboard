@@ -12,8 +12,11 @@ V1 contains the frozen Global Homepage and the first Application directory:
 - Application and Reading summaries
 - Keyword-only Global Search
 - Lightweight Quick Capture placeholder
-- Current Application Pipeline: New, Preparing, and Monitoring
-- Application Records: Submitted and Archive
-- Example-only Application records with non-reflowing detail overlays
+- Application overview with an All entry at the top
+- Left directory: New, Monitoring, Preparing, Submitted, and Archive
+- Layered paper-folder browser inspired by an editorial filing system
+- Centered opportunity cards with link, fit, status, deadline, and notes
+- New actions: Save, Monitor, and Delete
+- Session-only manual entry for Monitoring and Preparing
 
 This is a static clickable prototype. Application-directory records are fictional examples. It does not include a backend, database, AI chat, file processing, or real search.
