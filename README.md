@@ -18,6 +18,6 @@ V1 contains the frozen Global Homepage and the first Application directory:
 - Centered opportunity cards with link, fit, status, deadline, and notes
 - New actions: Save, Monitor, and Delete
 - Session-only manual entry for Monitoring and Preparing
-- Submitted document folders with session-only local material upload and file opening
+- Submitted document folders with editable confirmation-email receipt time, session-only local material upload, and file opening
 
 This is a static clickable prototype. Application-directory records are fictional examples. It does not include a backend, database, AI chat, file processing, or real search.

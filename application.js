@@ -98,6 +98,7 @@ const addForm = document.querySelector('#manual-add-form');
 const submittedDocuments = document.querySelector('#submitted-documents');
 const documentUpload = document.querySelector('#document-upload');
 const submittedDocumentList = document.querySelector('#submitted-document-list');
+const confirmationReceivedTime = document.querySelector('#confirmation-received-time');
 
 function allItems() {
   return viewOrder.flatMap(stage => collections[stage]);
@@ -197,8 +198,14 @@ function openDetail(id) {
   link.classList.toggle('is-disabled', !item.link);
   document.querySelector('#application-detail-fit-notes').innerHTML = item.fitNotes.map(note => `<li>${note}</li>`).join('');
   document.querySelector('#application-detail-note').textContent = item.note || 'No notes yet.';
-  submittedDocuments.hidden = item.stage !== 'submitted';
-  if (item.stage === 'submitted') renderSubmittedFiles(item.id);
+  const isSubmitted = item.stage === 'submitted';
+  submittedDocuments.hidden = !isSubmitted;
+  document.querySelector('#application-detail-fit-section').hidden = isSubmitted;
+  document.querySelector('#application-detail-note-section').hidden = isSubmitted;
+  if (isSubmitted) {
+    confirmationReceivedTime.value = item.receiptReceivedAt || '';
+    renderSubmittedFiles(item.id);
+  }
   renderDetailActions(item);
   detailOverlay.hidden = false;
   setTimeout(() => document.querySelector('#application-detail-close').focus(), 0);
@@ -359,6 +366,12 @@ documentUpload.addEventListener('change', () => {
   submittedFiles.set(item.id, [...existing, ...added]);
   documentUpload.value = '';
   renderSubmittedFiles(item.id);
+});
+
+confirmationReceivedTime.addEventListener('change', () => {
+  const item = findItem(openItemId);
+  if (!item || item.stage !== 'submitted') return;
+  item.receiptReceivedAt = confirmationReceivedTime.value;
 });
 
 searchOverlay.addEventListener('click', event => { if (event.target === searchOverlay) closeSearch(); });
