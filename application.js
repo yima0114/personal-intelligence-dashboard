@@ -119,9 +119,23 @@ function folderTemplate(item, index) {
   </button>`;
 }
 
+function allListTemplate(item, index) {
+  const savedLabel = item.stage === 'new' && item.saved ? ' · Saved' : '';
+  return `<button class="all-application-row" type="button" data-item-id="${item.id}" aria-label="Open ${item.title}">
+    <span class="all-row-index">${String(index + 1).padStart(2, '0')}</span>
+    <span class="all-row-stage"><i class="status-${item.tone}"></i>${stageLabel(item.stage)}${savedLabel}</span>
+    <span class="all-row-copy"><strong>${item.title}</strong><small>${item.institution} · ${item.place}</small></span>
+    <span class="all-row-date">${item.date}</span>
+    <span class="all-row-fit">${item.fit}</span>
+    <b>→</b>
+  </button>`;
+}
+
 function renderFolders() {
   const items = itemsForView(selectedView);
-  folderGrid.innerHTML = items.map(folderTemplate).join('');
+  const isAll = selectedView === 'all';
+  folderGrid.classList.toggle('list-mode', isAll);
+  folderGrid.innerHTML = isAll ? items.map(allListTemplate).join('') : items.map(folderTemplate).join('');
   folderEmpty.hidden = items.length > 0;
   folderGrid.hidden = items.length === 0;
   folderGrid.querySelectorAll('[data-item-id]').forEach(folder => {
